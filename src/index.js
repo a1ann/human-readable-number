@@ -2,30 +2,42 @@ module.exports = function toReadable(number) {
     if (number < 10) {
         return sayNumber(number);
     }
+
     if (number < 20) {
         return sayTeen(number);
     }
+
     let resultP3 = "", resultP2 = "", resultP1 = "";
     num3 = number % 10;
     num2 = Math.floor(number / 10) % 10;
     num1 = Math.floor(number / 100) % 10;
+    resultP1 = sayNumber(num1) + ' hundred';
+
     if (num2 == 0 && num3 == 0) {
-        return sayNumber(num1) + ' hundred';
+        return resultP1;
     }
-    if (Math.floor(number / 10) >= 10 && Math.floor(number / 10) <= 19) {
-        resultP2 = sayTeen(Math.floor(number / 10));
+    if (number % 100 >= 10 && number % 100 <= 19) {
+        resultP2 = sayTeen(number % 100);
+        return resultP1 + ' ' + resultP2;
     }
-    else {
+
+    if (num3 !== 0) {
+        resultP3 = ' ' + sayNumber(num3);
+    }
+
+    if (num2 !== 0) {
         resultP2 = sayTy(num2);
     }
-    if (num3 !== 0) {
-        resultP3 = sayNumber(num3);
+    else {
+        return resultP1 + resultP3;
     }
+
+
     if (number < 100) {
-        return resultP2 + " " + resultP3;
+        return resultP2 + resultP3;
     }
-    resultP1 = sayNumber(num1) + ' hundred';
-    return resultP1 + " " + resultP2 + " " + resultP3;
+
+    return resultP1 + ' ' + resultP2 + resultP3;
 }
 
 function sayNumber(n) {
